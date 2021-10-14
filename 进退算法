@@ -1,0 +1,45 @@
+'''
+进退算法求单谷区间
+ 1.先画出函数图形，确定单股区间的大致范围
+ 2.设定初始点a,步长h，确定下一定b为a+h
+ 3.进退算法还需要一个临时点xt
+'''
+
+import matplotlib.pyplot as plt
+x_value = range(-10, 10)
+y_value = [x ** 3 - x ** 2 - 30 * x for x in x_value]
+plt.style.use('seaborn')
+fig, ax = plt.subplots()
+ax.plot(x_value, y_value, linewidth=3)
+plt.show()
+def hanshu(x):
+    y = x * x * x - x * x - 30 * x
+    return y
+
+x=float(input("请输入起点值："))
+a = x
+h = 0.1
+b = a + h
+if hanshu(a) >= hanshu(b):
+    i = 0
+    xt = a
+    while hanshu(xt) >= hanshu(b):
+        i += 1
+        a = xt
+        xt = b
+        b = b + 2 * i * h
+else:
+    a = a - h
+    b = x
+    if hanshu(a) <= hanshu(b):
+        j = 0
+        xt = b
+        while hanshu(a) <= hanshu(xt):
+            j += 1
+            b = xt
+            xt = a
+            a = a - 2 * h * j
+    else:
+        b = a + h
+
+print(a, b)
